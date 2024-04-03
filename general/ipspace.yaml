@@ -11,7 +11,7 @@ report:
     - "{{Storages}}/summary/{{Workspace}}/ipspace-{{Workspace}}.txt"
 
 params:
-  - ipTimeout: '2h'
+  - ipTimeout: '5h'
   - ipFile: '{{Output}}/ipspace/{{Workspace}}-ip.txt'
 pre_run:
   - CreateFolder("{{Output}}/ipspace")

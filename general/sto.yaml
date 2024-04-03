@@ -1,5 +1,5 @@
 name: sto
-desc: Subdomain Takeover scan
+desc: 子域名接管扫描
 
 report:
   final:
