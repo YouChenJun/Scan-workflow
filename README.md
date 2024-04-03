@@ -8,6 +8,6 @@
 更新配置文件命令:
 
 ```shell
-bash <(curl -fsSL https://github.com/YouChenJun/Scan-workflow/blob/main/update.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/update.sh)
 ```
 

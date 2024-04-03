@@ -20,7 +20,7 @@ steps:
       - "{{Binaries}}/httpx"
       - "{{httpFile}}"
     commands:
-      - cat {{httpFile}} | {{Binaries}}/httpx -H '{{defaultUA}}' -t {{overviewThreads}} -no-color -json -title -tech-detect -status-code -silent >> {{Output}}/fingerprint/{{Workspace}}-http-overview.txt
+      - cat {{httpFile}} | {{Binaries}}/httpx -H '{{defaultUA}}' -t {{overviewThreads}} -no-color -json -title -tech-detect -status-code -silent -hash md5 >> {{Output}}/fingerprint/{{Workspace}}-http-overview.txt
     scripts:
       - ExecCmd("echo 'URL, Title, Tech, Response Hash' > {{Output}}/fingerprint/{{Workspace}}-raw-overview.txt")
       - CleanJSONHttpx('{{Output}}/fingerprint/{{Workspace}}-http-overview.txt', '{{Output}}/fingerprint/{{Workspace}}-raw-overview.txt')
