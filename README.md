@@ -11,3 +11,9 @@
 bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/update.sh)
 ```
 
+安装的时候可能需要配置代理：
+
+```
+export https_proxy=http://192.168.10.1:10809/
+```
+
