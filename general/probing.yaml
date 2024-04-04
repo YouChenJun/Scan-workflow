@@ -21,7 +21,7 @@ params:
   - resolvers: "{{Data}}/mics/resolvers.txt"
   - trustedResolvers: "{{Data}}/mics/trusted-resolvers.txt"
   - permLimit: "8000"
-  - wildcardLimit: "100000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
+  - wildcardLimit: "500000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
   - enablePermutation: "false"
   - enableDnsBruteFocing: "false"
   - dnsJsonFile: "{{Output}}/probing/dns-json-{{Workspace}}.txt"
@@ -32,7 +32,7 @@ params:
   - httpThreads: "{{ threads * 8 }}"
   - dnsxThreads: "{{ threads * 8 }}"
   - wildcardTests: "{{ threads * 3 }}"
-  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
+  - defaultUA: "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.1"
 
 steps:
   # check if we already scan before
@@ -53,6 +53,7 @@ steps:
       - 'cat {{bruteWordlist}} >> {{customDnsWordlist}}'
     scripts:
       - "SortU('{{customDnsWordlist}}')"
+      - ExecCmd("cat {{customDnsWordlist}}")
   # simple bruteforce with main domain
   - conditions:
       - '"{{enableDnsBruteFocing}}" == "true"'
@@ -64,6 +65,7 @@ steps:
     scripts:
       - ExecCmd("cat {{Output}}/probing/subbrute-{{Workspace}}.txt >> {{finalSubdomainFile}}")
       - SortU("{{finalSubdomainFile}}")
+      - ExecCmd("cat {{finalSubdomainFile}}")
 
   # generate permutation DNS when there is not too much domains
   - conditions:
@@ -87,6 +89,7 @@ steps:
       - "{{Binaries}}/puredns resolve {{rawDnsFile}} -r {{resolvers}} --write {{Output}}/probing/nonwild-{{Workspace}}.txt --write-massdns {{dnsFile}} --write-wildcards {{Output}}/probing/wildcards-{{Workspace}}.txt --wildcard-tests {{wildcardTests}} --resolvers-trusted {{trustedResolvers}} --rate-limit-trusted {{massdnsRateBrute}} --bin {{Binaries}}/massdns >/dev/null 2>&1"
     scripts:
       - "SortU('{{dnsFile}}')"
+      - ExecCmd("cat {{dnsFile}}")
 
   # in case we have no DNS result
   - conditions:
@@ -103,7 +106,7 @@ steps:
       - "cat {{rawDnsFile}} {{finalSubdomainFile}} | sort -u | {{Binaries}}/httpx -H '{{defaultUA}}' -silent -t {{httpThreads}} >> {{httpFile}}"
     scripts:
       - "SortU('{{httpFile}}')"
-      - "ExecCmd('rm -rf {{rawDnsFile}} {{customDnsWordlist}} {{permDomainFile}}')"
+      # - "ExecCmd('rm -rf {{rawDnsFile}} {{customDnsWordlist}} {{permDomainFile}}')"
 
   # if the httpFile is too big, we need to filter it as it might be a wildcard domains
   - conditions:
