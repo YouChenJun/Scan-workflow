@@ -32,7 +32,7 @@ params:
   - httpThreads: "{{ threads * 8 }}"
   - dnsxThreads: "{{ threads * 8 }}"
   - wildcardTests: "{{ threads * 3 }}"
-  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
+  - defaultUA: "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.1.0.0"
 
 steps:
   # check if we already scan before
@@ -103,7 +103,7 @@ steps:
       - "cat {{rawDnsFile}} {{finalSubdomainFile}} | sort -u | {{Binaries}}/httpx -H '{{defaultUA}}' -silent -t {{httpThreads}} >> {{httpFile}}"
     scripts:
       - "SortU('{{httpFile}}')"
-      # - "ExecCmd('rm -rf {{rawDnsFile}} {{customDnsWordlist}} {{permDomainFile}}')"
+      - "ExecCmd('rm -rf {{rawDnsFile}} {{customDnsWordlist}} {{permDomainFile}}')"
 
   # if the httpFile is too big, we need to filter it as it might be a wildcard domains
   - conditions:
