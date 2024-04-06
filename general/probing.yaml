@@ -32,7 +32,7 @@ params:
   - httpThreads: "{{ threads * 8 }}"
   - dnsxThreads: "{{ threads * 8 }}"
   - wildcardTests: "{{ threads * 3 }}"
-  - defaultUA: "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.1.0.0"
+  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
 
 steps:
   # check if we already scan before
