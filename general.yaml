@@ -1,5 +1,5 @@
 name: general
-desc: 全量资产信息搜集模式
+desc: Running default reconnaissance routine
 type: general
 validator: domain
 
@@ -16,16 +16,19 @@ routines:
   - modules:
       - fingerprint
   - modules:
+      - screenshot
+  - modules:
       - spider
   - modules:
       - sto
       - archive
       - ipspace
   - modules:
+      - vulnscan
+  - modules:
       - dirbscan
   - modules:
       - portscan
   - modules:
-      - porthttpdirbscan
-  - modules:
       - summary
+
