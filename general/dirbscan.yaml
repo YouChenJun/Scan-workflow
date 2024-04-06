@@ -16,7 +16,7 @@ params:
   - ffThreads: '{{ threads }}' # threads for single site
   - dirbThreads: '{{ threads / 3 }}'
   - ffTimeout: "1h"
-  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
+  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.1)"
 
 pre_run:
   - CreateFolder("{{Storages}}/paths/{{Workspace}}")

@@ -20,8 +20,8 @@ params:
   - bruteWordlist: "{{Data}}/wordlists/dns/small.txt"
   - resolvers: "{{Data}}/mics/resolvers.txt"
   - trustedResolvers: "{{Data}}/mics/trusted-resolvers.txt"
-  - permLimit: "8000"
-  - wildcardLimit: "100000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
+  - permLimit: "10000"
+  - wildcardLimit: "200000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
   - enablePermutation: "false"
   - enableDnsBruteFocing: "false"
   - dnsJsonFile: "{{Output}}/probing/dns-json-{{Workspace}}.txt"
