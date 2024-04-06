@@ -13,7 +13,7 @@ report:
     - "{{Output}}/vuln/nuclei/{{Workspace}}-nuclei-scan.txt"
 
 params:
-  - httpFile: "{{Output}}/probing/http-{{Workspace}}.txt"
+  - httpFile: "{{Output}}/probe/http-{{Workspace}}.txt"
   - sign: "~/.jaeles/base-signatures/cves/.*"
   - sign2: "~/.jaeles/base-signatures/common/.*"
   - sign3: "~/.jaeles/base-signatures/sensitive/.*"
@@ -103,9 +103,8 @@ steps:
       - GenNucleiReport('{{Output}}/vuln/nuclei/{{Workspace}}-nuclei-json.txt', '{{Output}}/vuln/nuclei/{{Workspace}}-nuclei.html')
       # noti to telegram if anything found
       - ExecCmd("cat {{Output}}/vuln/nuclei/{{Workspace}}-nuclei-json.txt | jq -r '[.info.severity,.\"template-id\",.\"matched-at\",.\"matched-name\"] | join(\" - \")' > {{Output}}/vuln/nuclei/{{Workspace}}-nuclei-scan.txt")
-      - SortU("{{Output}}/vuln/nuclei/{{Workspace}}-nuclei-scan.txt")
       - TeleMessByFile("#sensitive", "{{Output}}/vuln/nuclei/{{Workspace}}-nuclei-scan.txt")
       - Cat('{{Output}}/vuln/nuclei/{{Workspace}}-nuclei-scan.txt')
 
   - scripts:
-      - GenMarkdownReport("{{Data}}/markdown/general-template.md", "{{Output}}/summary.html")
+      - GenMarkdownReport("{{Data}}/markdown/urls-template.md", "{{Output}}/summary.html")

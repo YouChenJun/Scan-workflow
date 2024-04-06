@@ -1,42 +1,34 @@
 name: dirbscan
-desc: Run directory scan based on http output
+desc: Run Dirbscan
 
 report:
   final:
     - "{{Output}}/directory/beautify-{{Workspace}}.txt"
-    - "{{Storages}}/paths/{{Workspace}}/paths-{{Workspace}}.txt"
-    - "{{Storages}}/paths/{{Workspace}}/beautify-{{Workspace}}.csv"
+    - "{{Output}}/directory/beautify-{{Workspace}}.csv"
 
 params:
-  - httpFile: "{{Output}}/probing/http-{{Workspace}}.txt"
-  - wordlists: "{{Data}}/wordlists/content/small.txt"
-  - dlimit: '50000'
+  - httpFile: "{{Output}}/probe/http-{{Workspace}}.txt"
+  - wordlists: "{{Data}}/wordlists/content/medium.txt"
+  - ffThreads: '30' # threads for single site
+  - threads: '10'
   - recursion: '0'
   - chan: '#mics'
   - ffThreads: '{{ threads }}' # threads for single site
   - dirbThreads: '{{ threads / 3 }}'
-  - ffTimeout: "1h"
+  - ffTimeout: '2h'
   - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
 
 pre_run:
-  - CreateFolder("{{Storages}}/paths/{{Workspace}}")
   - CreateFolder("{{Output}}/directory")
 
 steps:
-  # check wildcard before brute force dns. We don't want tons of garbage here
-  - conditions:
-      - "FileLength('{{httpFile}}') > {{dlimit}}"
-    scripts:
-      - ErrPrintf("Filter", "Got input file greater than {{dlimit}} line")
-      - Exit(1)
-
   - required:
       - "{{Binaries}}/ffuf"
       - "{{httpFile}}"
     source: "{{httpFile}}"
     threads: '{{dirbThreads}}'
     commands:
-      - "timeout -k 1m {{ffTimeout}} {{Binaries}}/ffuf -s -t {{ffThreads}} -noninteractive -ac -acs advanced -timeout 12 -H '{{defaultUA}}' -se -D -fc '429,404,400' -e 'asp,aspx,aspx~,asp~,py,py~,rb,rb~,php,php~,bak,bkp,cache,cgi,conf,csv,html,inc,js,json,jsp,jsp~,log,old,txt' -json -w {{wordlists}}:FUZZ -u [[.line]]/FUZZ > {{Output}}/directory/raw-[[._id_]].json"
+      - "timeout -k 1m {{ffTimeout}} {{Binaries}}/ffuf -s -t {{ffThreads}} -noninteractive -ac -acs advanced -timeout 15 -H '{{defaultUA}}' -se -D -fc '429,404,400' -e 'asp,aspx,aspx~,asp~,py,py~,rb,rb~,php,php~,bak,bkp,cache,cgi,conf,csv,html,inc,js,json,jsp,jsp~,log,old,txt' -json -w {{wordlists}}:FUZZ -u [[.line]]/FUZZ > {{Output}}/directory/raw-[[._id_]].json"
   - scripts:
       - ExecCmd("cat {{Output}}/directory/raw-*.json | jq -r '[.url,(.status|tostring),(.length|tostring),(.words|tostring),(.lines|tostring),.hash,.redirectlocation] | join(\",\")' > {{Output}}/directory/beautify-{{Workspace}}.csv")
       - ExecCmd("rm -rf {{Output}}/directory/raw-*.json")
@@ -44,8 +36,6 @@ steps:
       - ExecCmd("cat {{Storages}}/paths/{{Workspace}}/paths-{{Workspace}}.csv | {{Binaries}}/csvtk uniq -f 4 -I | {{Binaries}}/csvtk pretty --no-header-row -I -s ' | ' -W 75 > {{Storages}}/paths/{{Workspace}}/beautify-{{Workspace}}.txt")
       - TeleMessByFile("#dirb", "{{Output}}/directory/beautify-{{Workspace}}.txt")
       - Cat("{{Output}}/directory/beautify-{{Workspace}}.txt")
-      - ExecCmd("cp {{Output}}/directory/beautify-{{Workspace}}.txt {{Output}}/directory/unique-beautify-{{Workspace}}.txt")
 
-post_run:
-  - TotalDirb("{{Output}}/directory/beautify-{{Workspace}}.txt")
-  - GenMarkdownReport("{{Data}}/markdown/general-template.md", "{{Output}}/summary.html")
+  - scripts:
+      - GenMarkdownReport("{{Data}}/markdown/urls-template.md", "{{Output}}/summary.html")

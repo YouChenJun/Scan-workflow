@@ -22,7 +22,6 @@ params:
   - httpThreads: "{{ threads * 8 }}"
   - screenThreads: "{{ threads * 2}}"
   - skipPortScan: "false"
-  - defaultUA: "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.1"
 
 steps:
   # do port scan first
@@ -37,29 +36,19 @@ steps:
   - required:
       - "{{Output}}/portscan/open-ports.txt"
       - "{{Output}}/portscan/raw-open-ports.txt"
-      - "{{Binaries}}/httpx"
     commands:
       - "cat {{Output}}/portscan/open-ports.txt | {{Binaries}}/httprobe -c {{httpThreads}} -t 7000 >> {{Output}}/portscan/{{Workspace}}-http.txt"
     scripts:
       - SortU('{{Output}}/portscan/{{Workspace}}-http.txt')
-      
-    # 开放http端口的 使用httpx探测
-    commands:
-      - cat {{Output}}/portscan/{{Workspace}}-http.txt | {{Binaries}}/httpx -H '{{defaultUA}}' -t {{overviewThreads}} -no-color -json -title -tech-detect -status-code -silent -hash md5 >> {{Output}}/fingerprint/{{Workspace}}-ip-http-overview.txt
-    scripts:
-      - ExecCmd("echo 'URL, Title, Tech, Response Hash' > {{Output}}/fingerprint/{{Workspace}}-raw-overview.txt")
-      - CleanJSONHttpx('{{Output}}/fingerprint/{{Workspace}}-ip-http-overview.txt', '{{Output}}/fingerprint/{{Workspace}}-raw-overview.txt')
-      - PrintCSV('{{Output}}/fingerprint/{{Workspace}}-ip-raw-overview.txt')
-      - ExecCmd("cat {{Output}}/fingerprint/{{Workspace}}-ip-raw-overview.txt | csvtk pretty --no-header-row -I -s ' | ' -W 75 > {{Output}}/fingerprint/beautify-{{Workspace}}-ip-http.txt")
 
-  # # do screenshot on new http running
-  # - required:
-  #     - "{{Binaries}}/aquatone"
-  #     - "{{Output}}/portscan/{{Workspace}}-http.txt"
-  #   commands:
-  #     - "cat {{Output}}/portscan/{{Workspace}}-http.txt | {{Binaries}}/aquatone -threads {{screenThreads}} -out {{Output}}/portscan/{{Workspace}}-screenshot >/dev/null 2>&1"
-  #   scripts:
-  #     - ExecCmd("mv {{Output}}/portscan/{{Workspace}}-screenshot/aquatone_report.html {{Output}}/portscan/{{Workspace}}-screenshot/screenshot-{{Workspace}}.html")
+  # do screenshot on new http running
+  - required:
+      - "{{Binaries}}/aquatone"
+      - "{{Output}}/portscan/{{Workspace}}-http.txt"
+    commands:
+      - "cat {{Output}}/portscan/{{Workspace}}-http.txt | {{Binaries}}/aquatone -threads {{screenThreads}} -out {{Output}}/portscan/{{Workspace}}-screenshot >/dev/null 2>&1"
+    scripts:
+      - ExecCmd("mv {{Output}}/portscan/{{Workspace}}-screenshot/aquatone_report.html {{Output}}/portscan/{{Workspace}}-screenshot/screenshot-{{Workspace}}.html")
 
 post_run:
   - GenMarkdownReport("{{Data}}/markdown/general-template.md", "{{Output}}/summary.html")
