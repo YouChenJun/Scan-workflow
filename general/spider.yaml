@@ -16,7 +16,7 @@ params:
   - spiderDepth: "3"
   - crawlingTime: "30"
   - skipSpidering: "false"
-  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
+  - defaultUA: "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.1.0.0"
   - trufflehogThreads: "{{ threads * 6}}"
   - httpThreads: "{{ threads * 10}}"
 
