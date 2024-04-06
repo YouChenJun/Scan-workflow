@@ -10,7 +10,11 @@
 ```shell
 bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/update.sh)
 ```
+恢复配置文件命令:
 
+```shell
+bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/recovery.sh)
+```
 安装的时候可能需要配置代理：
 
 ```

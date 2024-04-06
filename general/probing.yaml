@@ -47,7 +47,7 @@ steps:
       - SortU("{{finalSubdomainFile}}")
 
   ##### DNS Brute Forcing
-  # 基于子域文件构建自定义单词列表
+    # build the custom wordlists based on the subdomain file
   - commands:
       - "cat {{finalSubdomainFile}} | {{Binaries}}/str-replace -d '.' -n | sort -u >> {{customDnsWordlist}}"
       - 'cat {{bruteWordlist}} >> {{customDnsWordlist}}'
