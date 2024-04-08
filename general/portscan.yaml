@@ -29,6 +29,7 @@ steps:
       - '{{nonCdnFile}}'
     commands:
       - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --scripts None --range {{ports}} -a {{nonCdnFile}} -g >> {{Output}}/portscan/raw-open-ports.txt"
+      - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --range {{ports}} -a {{nonCdnFile}} -- -sV -sS -oG {{Output}}/portscan/nmap-open-ports.txt"
     scripts:
       - CleanRustScan("{{Output}}/portscan/raw-open-ports.txt", "{{Output}}/portscan/open-ports.txt")
 
