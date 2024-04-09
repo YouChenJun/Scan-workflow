@@ -35,7 +35,7 @@ steps:
   - required:
       - '{{nonCdnFile}}'
     commands:
-      - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --range {{ports}} -a {{nonCdnFile}} -- -sV -sS -oG {{Output}}/portscan/nmap-open-ports.txt"
+      - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --range {{ports}} -a {{nonCdnFile}} -- -sV -sS -oG -append-output {{Output}}/portscan/nmap-open-ports.txt"
    
   # detect http running on open ports and service
   - required:
