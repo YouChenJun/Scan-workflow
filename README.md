@@ -21,3 +21,4 @@ bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/tes
 export https_proxy=http://192.168.10.1:10809/
 ```
 
+bash <(curl -fsSL https://raw.githubusercontent.com/osmedeus/osmedeus-base/master/install.sh)
