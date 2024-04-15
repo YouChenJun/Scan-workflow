@@ -5,7 +5,6 @@ report:
   final:
     - "{{Output}}/portscan/open-ports.txt"
     - "{{Output}}/portscan/{{Workspace}}-detail.txt"
-    - "{{Output}}/portscan/nmap-raw-{{Workspace}}.txt"
     - "{{Output}}/portscan/{{Workspace}}-screenshot/screenshot-{{Workspace}}.html"
     - "{{Output}}/portscan/{{Workspace}}-http.txt"
 
@@ -31,12 +30,6 @@ steps:
       - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --scripts None --range {{ports}} -a {{nonCdnFile}} -g >> {{Output}}/portscan/raw-open-ports.txt"
     scripts:
       - CleanRustScan("{{Output}}/portscan/raw-open-ports.txt", "{{Output}}/portscan/open-ports.txt")
-      
-  - required:
-      - '{{nonCdnFile}}'
-    commands:
-      - "{{Binaries}}/rustscan --timeout 3000 -b {{rateRustScan}} --range {{ports}} -a {{nonCdnFile}} -- -sV -sS -oG -append-output {{Output}}/portscan/nmap-open-ports.txt"
-   
   # detect http running on open ports and service
   - required:
       - "{{Output}}/portscan/open-ports.txt"
