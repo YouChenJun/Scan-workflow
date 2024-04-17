@@ -5,9 +5,9 @@ report:
     - "{{Output}}/portscan/nmap-ports.txt"
 
 params:
-  - portrawfile: "{{Output}}/portscan/raw-open-ports.txt"
+  - portrawfile: "{{Output}}/portscan/nmap"
 steps:
   - required:
     - '{{portrawfile}}'
     commands:
-    - "{{Binaries}}/nmapx -input {{portrawfile}} -output {{Output}}/portscan/nmap-ports.txt"
+    - "{{Binaries}}/nmapx -input {{portrawfile}} -output {{Output}}/portscan/nmap"
