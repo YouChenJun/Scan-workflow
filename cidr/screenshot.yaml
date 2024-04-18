@@ -1,0 +1,34 @@
+name: screenshot
+desc: screenshot on open HTTP port
+
+report:
+  final:
+    - "{{Output}}/portscan/{{Workspace}}-aquatone/portscan-{{Workspace}}.html"
+    - "{{Output}}/portscan/{{Workspace}}-http-overview.txt"
+    - "{{Output}}/portscan/goverview/report.html"
+    - "{{Output}}/portscan/beautify-http-{{Workspace}}.txt"
+
+# osmedeus scan -m /path/to/this/pws.yaml -t ip-ranges.txt
+params:
+  - httpFile: "{{Output}}/portscan/http-running.txt"
+  - screenThreads: "{{ threads }}"
+  - overviewThreads: "{{ threads * 5}}"
+
+pre_run:
+  - CreateFolder("{{Output}}/portscan")
+
+steps:
+  # do screenshot
+  - required:
+      - "{{Binaries}}/aquatone"
+      - "{{httpFile}}"
+    commands: 
+      - "cat {{httpFile}} | {{Binaries}}/aquatone -threads {{screenThreads}} -out {{Output}}/portscan/{{Workspace}}-aquatone > /dev/null 2>&1"
+    # change html report name
+    scripts:
+      - ExecCmd("mv {{Output}}/portscan/{{Workspace}}-aquatone/aquatone_report.html {{Output}}/portscan/{{Workspace}}-aquatone/portscan-{{Workspace}}.html")
+
+  # do screenshot with goverview
+  - scripts:
+      - ExecCmd("cat {{Output}}/portscan/http-running.txt | {{Binaries}}/goverview screen -c {{screenThreads}} --json -o {{Output}}/portscan/goverview/ > /dev/null 2>&1")
+      - ExecCmd("{{Binaries}}/goverview report -o  {{Output}}/portscan/goverview/ --report report.html")

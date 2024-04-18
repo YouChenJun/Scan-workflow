@@ -1,0 +1,13 @@
+name: portrecognition
+desc: 端口指纹识别
+report:
+  final:
+    - "{{Output}}/portscan/nmap-ports.txt"
+
+params:
+  - portrawfile: "{{Output}}/portscan/nmap"
+steps:
+  - required:
+    - '{{portrawfile}}'
+    commands:
+    - "{{Binaries}}/nmapx -input {{portrawfile}} -output {{Output}}/portscan/nmap"

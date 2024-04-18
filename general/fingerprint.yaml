@@ -10,7 +10,7 @@ report:
 params:
   - httpFile: "{{Output}}/probing/http-{{Workspace}}.txt"
   - overviewThreads: "{{ threads * 5 }}"
-  - defaultUA: "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.1.0.0"
+  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.1)"
 
 pre_run:
   - CreateFolder("{{Output}}/fingerprint")

@@ -17,11 +17,11 @@ params:
   - rawDnsFile: "{{Output}}/probing/raw-{{Workspace}}.txt"
   - customDnsWordlist: "{{Output}}/probing/customDnsWordlist-{{Workspace}}.txt"
   - permWordlists: "{{Data}}/wordlists/dns/altdns.txt"
-  - bruteWordlist: "{{Data}}/wordlists/dns/small.txt"
+  - bruteWordlist: "{{Data}}/wordlists/dns/medium.txt"
   - resolvers: "{{Data}}/mics/resolvers.txt"
   - trustedResolvers: "{{Data}}/mics/trusted-resolvers.txt"
-  - permLimit: "10000"
-  - wildcardLimit: "200000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
+  - permLimit: "8000"
+  - wildcardLimit: "100000" # if the httpFile is too big, we need to filter it as it might be a wildcard domains
   - enablePermutation: "false"
   - enableDnsBruteFocing: "false"
   - dnsJsonFile: "{{Output}}/probing/dns-json-{{Workspace}}.txt"
@@ -32,7 +32,7 @@ params:
   - httpThreads: "{{ threads * 8 }}"
   - dnsxThreads: "{{ threads * 8 }}"
   - wildcardTests: "{{ threads * 3 }}"
-  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.1)"
+  - defaultUA: "User-Agent: Mozilla/5.0 (compatible; Osmedeus/v4; +https://github.com/j3ssie/osmedeus)"
 
 steps:
   # check if we already scan before

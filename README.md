@@ -8,12 +8,12 @@
 更新配置文件命令:
 
 ```shell
-bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/update.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/test/update.sh)
 ```
 恢复配置文件命令:
 
 ```shell
-bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/main/recovery.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/test/recovery.sh)
 ```
 安装的时候可能需要配置代理：
 
@@ -21,3 +21,4 @@ bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/Scan-workflow/mai
 export https_proxy=http://192.168.10.1:10809/
 ```
 
+bash <(curl -fsSL https://raw.githubusercontent.com/YouChenJun/XSRC-base/main/install.sh)

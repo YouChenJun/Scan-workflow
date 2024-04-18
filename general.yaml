@@ -1,5 +1,5 @@
 name: general
-desc: 全量资产信息搜集模式
+desc: Running default reconnaissance routine
 type: general
 validator: domain
 
@@ -26,6 +26,8 @@ routines:
   - modules:
       - portscan
   - modules:
-      - porthttpdirbscan
+      - portrecognition
+
   - modules:
       - summary
+

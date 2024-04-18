@@ -13,8 +13,8 @@ report:
 
 params:
   - httpFile: "{{Output}}/probing/http-{{Workspace}}.txt"
-  - archiveTimeout: "2h"
-  - alimit: "50000"
+  - archiveTimeout: "1h"
+  - alimit: "10000"
 
 # {{Output}} == {{Workspaces}} + {{Workspace}} but strip "/" char
 pre_run:
