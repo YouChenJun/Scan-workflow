@@ -9,7 +9,7 @@ pre_run:
   - CreateFolder("{{Output}}/portscan/nmap")
 
 params:
-  - portrawfile: "{{Output}}/portscan/nmap"
+  - portrawfile: "{{Output}}/portscan/raw-open-ports.txt"
 
 
 steps:
