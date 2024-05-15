@@ -23,11 +23,9 @@ routines:
       - ipspace
   - modules:
       - dirbscan
-  - modules:
       - portscan
   - modules:
       - portrecognition
-
   - modules:
       - summary
 
