@@ -46,10 +46,10 @@ steps:
   #   scripts:
   #     - SortU("{{linkFile}}")
 
-  - label: "Getting raw response & scanning for secrets with trufflehog"
-    scripts:
-      - ExecCmd("cat {{linkFile}} | {{Binaries}}/httpx -silent -nf -no-color -title -t {{httpThreads}} -H '{{defaultUA}}' --store-response-dir {{httpResponse}} ")
-      - ExecCmd("trufflehog --concurrency={{trufflehogThreads}} filesystem {{httpResponse}} > {{Output}}/linkfinding/trufflehog-{{Workspace}}-output.txt 2>&1")
+  # - label: "Getting raw response & scanning for secrets with trufflehog"
+  #   scripts:
+  #     - ExecCmd("cat {{linkFile}} | {{Binaries}}/httpx -silent -nf -no-color -title -t {{httpThreads}} -H '{{defaultUA}}' --store-response-dir {{httpResponse}} ")
+  #     - ExecCmd("trufflehog --concurrency={{trufflehogThreads}} filesystem {{httpResponse}} > {{Output}}/linkfinding/trufflehog-{{Workspace}}-output.txt 2>&1")
 
   # Print the file if there is not too much data
   - conditions:
