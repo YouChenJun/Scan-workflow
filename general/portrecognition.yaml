@@ -10,7 +10,8 @@ pre_run:
 
 params:
   - portrawfile: "{{Output}}/portscan/raw-open-ports.txt"
-  
+
+
 steps:
   - required:
       - '{{portrawfile}}'

@@ -13,11 +13,11 @@ params:
   - spiderTimeout: "2h"
   - spiderThreads: "{{ threads }}"
   - spiderPrallel: "{{ threads / 2 }}"
-  - spiderDepth: "3"
+  - spiderDepth: "4"
   - crawlingTime: "30"
   - skipSpidering: "false"
   - defaultUA:  "User-Agent: Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.1)"
-  - trufflehogThreads: "{{ threads * 6}}"
+  - trufflehogThreads: "{{ threads * 10}}"
   - httpThreads: "{{ threads * 10}}"
 
 pre_run:

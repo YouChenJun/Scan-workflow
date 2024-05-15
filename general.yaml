@@ -26,7 +26,6 @@ routines:
       - portscan
   - modules:
       - portrecognition
-
   - modules:
       - summary
 
