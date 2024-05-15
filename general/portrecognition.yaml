@@ -3,10 +3,7 @@ desc: 端口指纹识别
 
 report:
   final:
-    - "{{Output}}/portscan/nmap"
-
-pre_run:
-  - CreateFolder("{{Output}}/portscan/nmap")
+    - "{{Output}}/portscan/"
 
 params:
   - portrawfile: "{{Output}}/portscan/raw-open-ports.txt"
