@@ -1,0 +1,24 @@
+name: domain
+desc: 自用于子域名-ip信息收集
+type: doamin
+validator: domain
+
+usage: |
+    osmedeus scan -f doamin -t target.com
+    osmedeus scan -f doamin -x spidering -t example.com
+    osmedeus scan -f doamin -t example.com -p 'enableDnsBruteFocing=true'
+
+routines:
+  - modules:
+      - subdomain
+  - modules:
+      - probing
+  - modules:
+      - fingerprint
+  - modules:
+      - sto
+      - ipspace
+      - archive
+  - modules:
+      - summary
+
